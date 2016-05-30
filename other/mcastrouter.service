@@ -1,0 +1,21 @@
+[Unit]
+Description=Multicast Router
+After=syslog.target
+After=network.target
+After=httpd.service
+
+[Service]
+Type=forking
+User=root
+Group=root
+
+Restart=always
+RestartSec=1
+
+ExecStart=/usr/bin/MulticastRouter
+ExecStop=/usr/bin/kill $MAINPID
+ExecReload=/usr/bin/kill $MAINPID ; /usr/bin/MulticastRouter
+KillSignal=SIGCONT
+
+[Install]
+WantedBy=multi-user.target
